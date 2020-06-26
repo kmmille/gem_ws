@@ -23,7 +23,10 @@ if __name__ == "__main__":
         rospy.sleep(7)
 
     targetState = ModelState()
-    targetState = model.waypointList.pop(0)
+    # targetState = model.waypointList.pop(0)
+    # print("target state", targetState)
+    targetState.pose.position.x = 10
+    targetState.pose.position.y = 10
 
     safe = True
     start = time.time()
@@ -52,7 +55,6 @@ if __name__ == "__main__":
         #     safe = True
         safe = True
         if(safe):
-            print("safe")
             if(distToTargetX < .55 and distToTargetY < .55):
                 if not model.waypointList:
                     newState = ModelState()
