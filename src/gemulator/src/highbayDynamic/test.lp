@@ -3,8 +3,8 @@
 Minimize
   - 20 C2 - 40 C3 + 500 Constant + [ 2 C2 ^2 + 2 C3 ^2 ] / 2 
 Subject To
- R0: C0 = 7
- R1: C1 = 15
+ R0: C0 = 9
+ R1: C1 = 19
  R2: C2 = 10
  R3: C3 = 20
  R4: - C0 + 1e+06 alpha_ob0_seg0[0] <= 999989.847606

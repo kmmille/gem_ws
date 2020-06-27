@@ -67,11 +67,22 @@ def dynamic_obstacles(actor_list, d_s=11, T_s=2):
         # print(roll, pitch, yaw)
         #
         if norm(np.array([x_act, y_act] - np.array([x_pos, y_pos]))) <= d_s:
+            print('detect dyn!')
             # Speed is 0.5 in the x direction
             if yaw < 0:
-                rect = ((x_act-0.25-(0.5*T_s), y_act-0.25), (x_act+0.25, y_act+0.25))
+                # rect = ((x_act-0.25-(2*T_s), y_act-0.25, 0), (x_act+0.25, y_act+0.25, 0.25))
+                if x_act-0.25-2*T_s>0:
+                    rect = ((x_act-0.25-(2*T_s), y_act-0.25, 0), (x_act+0.25, y_act+0.25, 0.25))
+                else:
+                    t = (x_act-2*T_s)/2
+                    rect = ((0-0.25, y_act-0.25, 0), (max(x_act+0.25, 0.25+2*t), y_act+0.25, 0.25))
+
             else:
-                rect = ((x_act-0.25, y_act-0.25), (x_act+0.25+(0.5*T_s), y_act+0.25))
+                if x_act+0.25+2*T_s<10:
+                    rect = ((x_act-0.25, y_act-0.25, 0), (x_act+0.25+(2*T_s), y_act+0.25, 0.25))
+                else:
+                    t = (x_act+2*T_s - 10)/2
+                    rect = ((min(x_act-0.25, 10 - 0.25 - t*2), y_act-0.25, 0), (10+0.25, y_act+0.25, 0.25))
             rect_local_dyn.append(rect)
     return(rect_local_dyn)
 

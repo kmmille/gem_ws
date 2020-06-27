@@ -9,13 +9,15 @@ from planner import find_xref
 # from a_star import a_star
 # from hybrid_a_star import hybrid_a_star
 import matplotlib.pyplot as plt
-from simple_sensor import static_obstacles
+from simple_sensor import static_obstacles, dynamic_obstacles
 
 
 # algorithm = sys.argv[1]
 # environment = sys.argv[2]
 d_s = 5
 T_synth = 1
+T_s = 2
+actor_list = ['actor']
 
 if __name__ == "__main__":
     rospy.init_node("model_dynamics")
@@ -43,12 +45,13 @@ if __name__ == "__main__":
 
     grid_size = 1.0
 
-    bloat_list = [1, 1, 1, 1, 1, 1, 1, 1, 1]
+    bloat_list = [1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2]
     theta = [(sx-0.5, sy-0.5), (sx+0.5, sy+0.5)]
     goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
 
     obs = static_obstacles(d_s)
-    oblen = len(obs)
+    obs = obs + dynamic_obstacles(actor_list, d_s, T_s)
+    # oblen = len(obs)
 
     path = find_xref(theta, goal, obs, 10, 0, bloat_list)
     # print(oblen)
@@ -90,9 +93,9 @@ if __name__ == "__main__":
             sy = round(currState.pose.position.y)  # [m]
             stheta = round(current_heading[2] * 180 / pi)
 
-            gx = round(10) #(50)  # [m]
-            gy = round(20) #(80)  # [m]
-            gtheta = round(180)
+            # gx = round(10) #(50)  # [m]
+            # gy = round(20) #(80)  # [m]
+            # gtheta = round(180)
 
             grid_size = 1.0
 
@@ -101,7 +104,8 @@ if __name__ == "__main__":
             goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
 
             obs = static_obstacles(d_s)
-            oblen = len(obs)
+            obs = obs + dynamic_obstacles(actor_list, d_s, T_s)
+            # oblen = len(obs)
 
             path = find_xref(theta, goal, obs, 10, 0, bloat_list, path[1])
 
