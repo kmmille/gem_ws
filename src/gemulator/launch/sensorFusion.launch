@@ -35,7 +35,13 @@
      <arg name="sdf_file" default="$(find gemulator)/models/marker/model.sdf" />
 
      <node name="$(arg robot_name)_spawn_sdf" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-       args="-file $(arg sdf_file) -sdf -x 0 -y -0 -z 0 -model $(arg robot_name)" />
+       args="-file $(arg sdf_file) -sdf -x 10 -y 20 -z 0 -model $(arg robot_name)" />
+
+    <!-- <arg name="robot_name" default="marker1"/>
+    <arg name="sdf_file" default="$(find gemulator)/models/marker/model.sdf" />
+
+    <node name="$(arg robot_name)_spawn_sdf" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+      args="-file $(arg sdf_file) -sdf -x 10 -y -20 -z 0 -model $(arg robot_name)" /> -->
 
 
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from math import *
 import time
 import sys
@@ -15,7 +16,7 @@ from simple_sensor import static_obstacles, dynamic_obstacles
 # algorithm = sys.argv[1]
 # environment = sys.argv[2]
 d_s = 5
-T_synth = 1
+T_synth = 0.5
 T_s = 2
 actor_list = ['actor']
 
@@ -35,7 +36,7 @@ if __name__ == "__main__":
     min_x, max_x, min_y, max_y = -100, 100, -100, 100
 
     #### set the start of path planner ####
-    sx = round(currState.pose.position.x)  # [m]
+    sx = round(currState.pose.position.x ) # [m]
     sy = round(currState.pose.position.y)  # [m]
     stheta = round(current_heading[2] * 180 / pi)
 
@@ -45,15 +46,22 @@ if __name__ == "__main__":
 
     grid_size = 1.0
 
-    bloat_list = [1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2]
+    bloat_list = [1, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
     theta = [(sx-0.5, sy-0.5), (sx+0.5, sy+0.5)]
     goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
 
+    # t1 = time.time()
     obs = static_obstacles(d_s)
     obs = obs + dynamic_obstacles(actor_list, d_s, T_s)
+    # t2 = time.time()
+    # print('obstime:', t2 - t1)
     # oblen = len(obs)
 
+    # t1 = time.time()
     path = find_xref(theta, goal, obs, 10, 0, bloat_list)
+    # path = [(0,0), (5, 10), (10, 20)]
+    # t2 = time.time()
+    # print('synthtime:', t2- t1)
     # print(oblen)
     print(path)
 
@@ -89,8 +97,8 @@ if __name__ == "__main__":
 
         if time.time() - t_s >= T_synth:
             t_s = time.time()
-            sx = round(currState.pose.position.x)  # [m]
-            sy = round(currState.pose.position.y)  # [m]
+            sx = currState.pose.position.x  # [m]
+            sy = currState.pose.position.y  # [m]
             stheta = round(current_heading[2] * 180 / pi)
 
             # gx = round(10) #(50)  # [m]
@@ -99,39 +107,42 @@ if __name__ == "__main__":
 
             grid_size = 1.0
 
-            bloat_list = [1, 1, 1, 1, 0.5, 0.5, 0.5, 0.5]
+            bloat_list = [1, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
             theta = [(sx-0.5, sy-0.5), (sx+0.5, sy+0.5)]
             goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
 
             obs = static_obstacles(d_s)
             obs = obs + dynamic_obstacles(actor_list, d_s, T_s)
             # oblen = len(obs)
-
-            path = find_xref(theta, goal, obs, 10, 0, bloat_list, path[1])
-
             # print(oblen)
-            print(path)
 
-            model.resetPath()
+            path1 = find_xref(theta, goal, obs, 10, 0, bloat_list, path[1])
+            # path = [(0, 0),(5, 10), (10, 20)]
+            # print(oblen)
+            print(path1)
+            if path1 != None:
+                path = path1
 
-            statePath = []
-            for coord in path[1:]:
-                newTargetState = ModelState()
-                newTargetState.pose.position.x = coord[0]
-                newTargetState.pose.position.y = coord[1]
-                newTargetState.twist.linear.x = .25
-                newTargetState.twist.linear.y = .25
+                model.resetPath()
 
-                if len(coord) == 3:
-                    [x, y, z, w] = model.euler_to_quaternion(0, 0, coord[2]*math.pi/180)
-                    newTargetState.pose.orientation.x = x
-                    newTargetState.pose.orientation.y = y
-                    newTargetState.pose.orientation.z = z
-                    newTargetState.pose.orientation.w = w
+                statePath = []
+                for coord in path[1:]:
+                    newTargetState = ModelState()
+                    newTargetState.pose.position.x = coord[0]
+                    newTargetState.pose.position.y = coord[1]
+                    newTargetState.twist.linear.x = .25
+                    newTargetState.twist.linear.y = .25
 
-                statePath.append(newTargetState)
+                    if len(coord) == 3:
+                        [x, y, z, w] = model.euler_to_quaternion(0, 0, coord[2]*math.pi/180)
+                        newTargetState.pose.orientation.x = x
+                        newTargetState.pose.orientation.y = y
+                        newTargetState.pose.orientation.z = z
+                        newTargetState.pose.orientation.w = w
 
-            model.addPlanedPath(statePath)
+                    statePath.append(newTargetState)
+
+                model.addPlanedPath(statePath)
 
             print('new')
 
@@ -141,10 +152,11 @@ if __name__ == "__main__":
         #     continue
 
         # print ("speed:", targetState.twist)
+        currState =  model.getModelState()
         distToTargetX = abs(targetState.pose.position.x - currState.pose.position.x)
         distToTargetY = abs(targetState.pose.position.y - currState.pose.position.y)
         # print(targetState.pose.position.x,targetState.pose.position.y)
-        if(distToTargetX < 1.0 and distToTargetY < 1.0):
+        if(distToTargetX < 1.5 and distToTargetY < 1.5):
             if not model.waypointList:
                 newState = ModelState()
                 newState.model_name = 'polaris_ranger_ev'

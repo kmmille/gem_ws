@@ -83,12 +83,13 @@ class bicycleModel():
     def rearWheelFeedback(self, currentPose, targetPose):
 
         #Gain Values
-        k1 = 4
-        k2 = 15
-        k3 = 4
+        k1 = 0.2
+        k2 = 2
+        k3 = 1
 
         #give targetVel and targetAngVel
-        targetVel = math.sqrt((targetPose.twist.linear.x*targetPose.twist.linear.x) + ((targetPose.twist.linear.y*targetPose.twist.linear.y)))
+        # targetVel = math.sqrt((targetPose.twist.linear.x*targetPose.twist.linear.x) + ((targetPose.twist.linear.y*targetPose.twist.linear.y)))
+        targetVel = 2
         targetAngVel = targetPose.twist.angular.z
         #print (targetVel, targetAngVel)
         currentEuler = self.quaternion_to_euler(currentPose.pose.orientation.x,
@@ -111,11 +112,11 @@ class bicycleModel():
         #give blank ackermannCmd
         newAckermannCmd = AckermannDrive()
 
-        if (2 * math.cos(thetaError)) + (k1 * xError) <= 2:
-            newAckermannCmd.speed = (2 * math.cos(thetaError)) + (k1 * xError)
-        else:
-            newAckermannCmd.speed = 2
-        newAckermannCmd.steering_angle_velocity = (0) + ((2)*((k2*yError) + (k3*math.sin(thetaError))))
+        # if (targetVel * math.cos(thetaError)) + (k1 * xError) <= targetVel:
+        newAckermannCmd.speed = (targetVel * math.cos(thetaError)) + (k1 * xError)
+        # else:
+        # newAckermannCmd.speed = targetVel
+        newAckermannCmd.steering_angle_velocity = (targetAngVel) + ((targetVel)*((k2*yError) + (k3*math.sin(thetaError))))
 
 
         #print(newAckermannCmd)

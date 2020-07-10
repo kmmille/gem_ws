@@ -77,17 +77,18 @@ def add_avoidance_constraints(model, xlist, obs, max_segs, bloat_factors):
 	# Avoid each polytope in the list
 	for seg_num in range(max_segs):
 		bloat_factor = bloat_factors[seg_num]
+		# bloat_factor = 1.3
 	# print(bloat_factor)
 	# bloat_factor = 10
-	for ob_num in range(len(obs)):
-		x_min, y_min, z_min = obs[ob_num][0]
-		x_max, y_max, z_max = obs[ob_num][1]
+		for ob_num in range(len(obs)):
+			x_min, y_min, z_min = obs[ob_num][0]
+			x_max, y_max, z_max = obs[ob_num][1]
 
-		ob = pc.box2poly([[x_min, x_max], [y_min, y_max]])
+			ob = pc.box2poly([[x_min, x_max], [y_min, y_max]])
 
-		# A, b = obs[ob_num]
-		# print(b)
-		add_obstacle_constraint(model, xlist, ob.A, ob.b, bloat_factor, ob_num, seg_num)
+			# A, b = obs[ob_num]
+			# print(b)
+			add_obstacle_constraint(model, xlist, ob.A, ob.b, bloat_factor, ob_num, seg_num)
 	return None
 
 def add_space_constraints(model, xlist, limits):
@@ -126,9 +127,22 @@ def find_xref(Theta, goal, obs, max_segs, l_min, bloat_list, wypt = None):
 
 		# obj = (xf[0] - xlist[-1][0])*(xf[0] - xlist[-1][0]) + (xf[1] - xlist[-1][1])*(xf[1] - xlist[-1][1])
 		# m.setObjective(obj, GRB.MINIMIZE)
-		if wypt != None:
-			obj = (wypt[0] - xlist[1][0])*(wypt[0] - xlist[1][0]) + (wypt[1] - xlist[1][1])*(wypt[1] - xlist[1][1])
-			m.setObjective(obj, GRB.MINIMIZE)
+		# print(len(xlist))
+		obj = 0
+		x_min, y_min = goal[0]
+		x_max, y_max = goal[1]
+		x_c = (x_min + x_max)/2
+		y_c = (y_min + y_max)/2
+		xf = [x_c, y_c]
+
+		for i in range(len(xlist)):
+			tem_obj = (x_c - xlist[i][0])*(x_c - xlist[i][0]) + (y_c - xlist[i][1])*(y_c - xlist[i][1])
+			obj += tem_obj
+		m.setObjective(obj, GRB.MINIMIZE)
+
+		# if wypt != None:
+		# 	obj = (wypt[0] - xlist[1][0])*(wypt[0] - xlist[1][0]) + (wypt[1] - xlist[1][1])*(wypt[1] - xlist[1][1])
+		# 	m.setObjective(obj, GRB.MINIMIZE)
 
 		m.setParam(GRB.Param.OutputFlag, 0)
 

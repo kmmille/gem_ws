@@ -6,7 +6,7 @@
 
     <gui>
       <camera name="user_camera">
-        <pose>10 -10 6 0 .523 2.35</pose>
+        <pose frame=''>22.4687 9.54484 34.2037 -0 1.063 3.13</pose>
       </camera>
     </gui>
 
@@ -43,7 +43,7 @@
 
      <script>
        <loop>true</loop>
-       <delay_start>0.000000</delay_start>
+       <delay_start>0.00000</delay_start>
        <auto_start>true</auto_start>
        <trajectory id="0" type="walk">
 
@@ -53,22 +53,22 @@
          </waypoint>
 
          <waypoint>
-           <time>5</time>
+           <time>10</time>
            <pose>10 15 0 0 0 0</pose>
          </waypoint>
 
          <waypoint>
-           <time>5.5</time>
+           <time>10.1</time>
            <pose>10 15 0 0 0 3.14</pose>
          </waypoint>
 
          <waypoint>
-           <time>10</time>
+           <time>20</time>
            <pose>0 15 0 0 0 3.14</pose>
          </waypoint>
 
          <waypoint>
-           <time>10.5</time>
+           <time>20.1</time>
            <pose>0 15 0 0 0 0</pose>
          </waypoint>
 
@@ -90,7 +90,6 @@
     <animation name="standing">
       <filename>stand.dae</filename>
       <interpolate_x>false</interpolate_x>
-
     </animation>
     <script>
       <trajectory id="0" type="standing">
@@ -117,8 +116,6 @@
       </trajectory>
     </script>
   </actor>
-
-
   <actor name="actor2">
    <skin>
      <filename>stand.dae</filename>
@@ -126,7 +123,6 @@
    <animation name="standing">
      <filename>stand.dae</filename>
      <interpolate_x>false</interpolate_x>
-
    </animation>
    <script>
      <trajectory id="0" type="standing">

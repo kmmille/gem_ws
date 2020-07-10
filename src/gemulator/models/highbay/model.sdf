@@ -272,16 +272,16 @@
     <collision name='Floor_Collision'>
       <geometry>
         <box>
-          <size>18.288  15.954375 .005</size>
+          <size>18.288  36 .005</size>
         </box>
       </geometry>
-      <pose frame=''>0 0 1.25 0 -0 0</pose>
+      <pose frame=''>0 10 1.25 0 -0 0</pose>
     </collision>
     <visual name='Floor_Visual'>
-      <pose frame=''>0 0 1.25 0 -0 0</pose>
+      <pose frame=''>0 10 1.25 0 -0 0</pose>
       <geometry>
         <box>
-          <size>18.288  15.954375 .005</size>
+          <size>18.288 36 .005</size>
         </box>
       </geometry>
       <material>

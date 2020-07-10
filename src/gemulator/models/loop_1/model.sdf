@@ -4,7 +4,471 @@
 		<static>true</static>
 		<link name="inner_loop">
 
-		<visual name="inner_point0">
+			<visual name="point0">
+				<pose>0 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point1">
+				<pose>0.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point2">
+				<pose>1 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point3">
+				<pose>1.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point4">
+				<pose>2 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point5">
+				<pose>2.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point6">
+				<pose>3 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point7">
+				<pose>3.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point8">
+				<pose>4 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point9">
+				<pose>4.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point10">
+				<pose>5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point11">
+				<pose>5.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point12">
+				<pose>6 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point13">
+				<pose>6.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point14">
+				<pose>7 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point15">
+				<pose>7.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point16">
+				<pose>8 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point17">
+				<pose>8.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point18">
+				<pose>9 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point19">
+				<pose>9.5 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="point20">
+				<pose>10 15 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Yellow</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="entry0">
+				<pose>5 8 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Green</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="entry1">
+				<pose>4.5 8 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Green</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="entry2">
+				<pose>4 8 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Green</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="entry3">
+				<pose>3.5 8 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Green</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="entry4">
+				<pose>3 8 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Green</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="entry5">
+				<pose>2.5 8 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Green</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="entry6">
+				<pose>2 8 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Green</name>
+					</script>
+				</material>
+			</visual>
+
+			<visual name="entry7">
+				<pose>1.5 8 0.01 0 0 0</pose>
+				<geometry>
+					<cylinder>
+						<radius>0.2</radius>
+						<length>0.001</length>
+					</cylinder>
+				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+						<name>Gazebo/Green</name>
+					</script>
+				</material>
+			</visual>
+
+		<!-- <visual name="inner_point0">
 			<pose>5.38060227608 0.241318782437 0.01 0 0 0</pose>
 			<geometry>
 				<cylinder>
@@ -12898,7 +13362,7 @@
 					<name>Gazebo/Yellow</name>
 				</script>
 			</material>
-		</visual>
+		</visual> -->
 
 		</link>
 	</model>
