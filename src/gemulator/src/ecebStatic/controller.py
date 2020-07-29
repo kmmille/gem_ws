@@ -46,8 +46,8 @@ class bicycleModel():
 
         self.waypointList = []
 
-        self.waypointSub = rospy.Subscriber("/gem/waypoint", ModelState, self.__waypointHandler, queue_size=1)
-        self.waypointPub = rospy.Publisher("/gem/waypoint", ModelState, queue_size=1)
+        # self.waypointSub = rospy.Subscriber("/gem/waypoint", ModelState, self.__waypointHandler, queue_size=1)
+        # self.waypointPub = rospy.Publisher("/gem/waypoint", ModelState, queue_size=1)
 
         self.modelStatePub = rospy.Publisher("/gazebo/set_model_state", ModelState, queue_size=1)
 
@@ -137,10 +137,10 @@ class bicycleModel():
 
         # print(control.speed)
         # print(control.steering_angle_velocity)
-
-        with open('inputs.csv', 'a') as f:
-            writer = csv.writer(f)
-            writer.writerow([str(time.time()), str(control.speed), str(control.steering_angle_velocity)])
+        #
+        # with open('inputs.csv', 'a') as f:
+        #     writer = csv.writer(f)
+        #     writer.writerow([str(time.time()), str(control.speed), str(control.steering_angle_velocity)])
 
         # with open('inputs.csv','a') as fd:
         #     fd.write(str([control.speed, control.steering_angle_velocity]))
@@ -181,6 +181,7 @@ class bicycleModel():
     #add a list of points in ModelState
     def addPlanedPath(self, path):
         self.waypointList = path + self.waypointList
+
     def resetPath(self):
         del self.waypointList[:]
         # print(len(self.waypointList))

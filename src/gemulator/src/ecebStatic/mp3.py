@@ -52,46 +52,63 @@ if __name__ == "__main__":
     theta = [(sx-0.5, sy-0.5), (sx+0.5, sy+0.5)]
     goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
 
-    # t1 = time.time()
+    # t1 = rospy.get_time()
     obs = static_obstacles(d_s)
     # obs = obs + dynamic_obstacles(actor_list, d_s, T_s)
-    # t2 = time.time()
+    # t2 = rospy.get_time()
     # print('obstime:', t2 - t1)
     # oblen = len(obs)
 
-    # t1 = time.time()
+    # t1 = rospy.get_time()
     path = find_xref(theta, goal, obs, 10, 0, bloat_list)
     # path = [(0,0), (5, 10), (10, 20)]
-    # t2 = time.time()
+    # t2 = rospy.get_time()
     # print('synthtime:', t2- t1)
     # print(oblen)
     print(path)
 
     statePath = []
-    for coord_num in range(len(path[1:])):
-        coord1 = path[coord_num]
-        coord = coord1
-        coord0 = path[coord_num-1]
-        for i in range(1,11):
-            newTargetState = ModelState()
-            newTargetState.pose.position.x = (coord1[0]-coord0[0])*i/10 + coord0[0]
-            newTargetState.pose.position.y = (coord1[1]-coord0[1])*i/10 + coord0[1]
-            newTargetState.twist.linear.x = .25
-            newTargetState.twist.linear.y = .25
+    for coord in path:
+        newTargetState = ModelState()
+        newTargetState.pose.position.x = coord[0]
+        newTargetState.pose.position.y = coord[1]
+        newTargetState.twist.linear.x = .25
+        newTargetState.twist.linear.y = .25
 
-            if len(coord) == 3:
-                theta = np.atan2(coord1[1]- coord0[1], coord1[0]-coord0[0])
-                [x, y, z, w] = model.euler_to_quaternion(0, 0, theta)
-                newTargetState.pose.orientation.x = x
-                newTargetState.pose.orientation.y = y
-                newTargetState.pose.orientation.z = z
-                newTargetState.pose.orientation.w = w
+        if len(coord) == 3:
+            [x, y, z, w] = model.euler_to_quaternion(0, 0, coord[2]*math.pi/180)
+            newTargetState.pose.orientation.x = x
+            newTargetState.pose.orientation.y = y
+            newTargetState.pose.orientation.z = z
+            newTargetState.pose.orientation.w = w
 
-            statePath.append(newTargetState)
+        statePath.append(newTargetState)
 
     model.addPlanedPath(statePath)
+    # for coord_num in range(len(path[1:])):
+    #     coord1 = path[coord_num]
+    #     coord = coord1
+    #     coord0 = path[coord_num-1]
+    #     for i in range(1,11):
+    #         newTargetState = ModelState()
+    #         newTargetState.pose.position.x = (coord1[0]-coord0[0])*i/10 + coord0[0]
+    #         newTargetState.pose.position.y = (coord1[1]-coord0[1])*i/10 + coord0[1]
+    #         newTargetState.twist.linear.x = .25
+    #         newTargetState.twist.linear.y = .25
+    #
+    #         if len(coord) == 3:
+    #             theta = np.atan2(coord1[1]- coord0[1], coord1[0]-coord0[0])
+    #             [x, y, z, w] = model.euler_to_quaternion(0, 0, theta)
+    #             newTargetState.pose.orientation.x = x
+    #             newTargetState.pose.orientation.y = y
+    #             newTargetState.pose.orientation.z = z
+    #             newTargetState.pose.orientation.w = w
+    #
+    #         statePath.append(newTargetState)
+    #
+    # model.addPlanedPath(statePath)
 
-    start = time.time()
+    start = rospy.get_time()
     t_s = start
 
     rate = rospy.Rate(100)  # 100 Hz
@@ -102,73 +119,100 @@ if __name__ == "__main__":
             continue
         # targetState = model.popNextPoint()
 
-        # if time.time() - t_s >= T_synth:
-        #     t_s = time.time()
-        #     sx = currState.pose.position.x  # [m]
-        #     sy = currState.pose.position.y  # [m]
-        #     stheta = round(current_heading[2] * 180 / pi)
-        #
-        #     # gx = round(10) #(50)  # [m]
-        #     # gy = round(20) #(80)  # [m]
-        #     # gtheta = round(180)
-        #
-        #     grid_size = 1.0
-        #
-        #     bloat_list = [1, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
-        #     theta = [(sx-0.5, sy-0.5), (sx+0.5, sy+0.5)]
-        #     goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
-        #
-        #     obs = static_obstacles(d_s)
-        #     # obs = obs + dynamic_obstacles(actor_list, d_s, T_s)
-        #     # oblen = len(obs)
-        #     # print(oblen)
-        #
-        #     path1 = find_xref(theta, goal, obs, 10, 0, bloat_list, path[1])
-        #     # path = [(0, 0),(5, 10), (10, 20)]
-        #     # print(oblen)
-        #     print(path1)
-        #     if path1 != None:
-        #         path = path1
-        #
-        #         model.resetPath()
-        #
-        #         statePath = []
-        #         for coord_num in range(len(path[1:])):
-        #             coord1 = path[coord_num]
-        #             coord = coord1
-        #             coord0 = path[coord_num-1]
-        #             for i in range(1,11):
-        #                 newTargetState = ModelState()
-        #                 newTargetState.pose.position.x = (coord1[0]-coord0[0])*i/10 + coord0[0]
-        #                 newTargetState.pose.position.y = (coord1[1]-coord0[1])*i/10 + coord0[1]
-        #                 newTargetState.twist.linear.x = .25
-        #                 newTargetState.twist.linear.y = .25
-        #
-        #                 if len(coord) == 3:
-        #                     theta = np.atan2(coord1[1]- coord0[1], coord1[0]-coord0[0])
-        #                     [x, y, z, w] = model.euler_to_quaternion(0, 0, theta)
-        #                     newTargetState.pose.orientation.x = x
-        #                     newTargetState.pose.orientation.y = y
-        #                     newTargetState.pose.orientation.z = z
-        #                     newTargetState.pose.orientation.w = w
-        #
-        #                 statePath.append(newTargetState)
-        #
-        #         model.addPlanedPath(statePath)
-        #
-        #     print('new')
-        # print(len(model.waypointList))
+        if rospy.get_time() - t_s >= T_synth:
+            t_s = rospy.get_time()
+            sx = currState.pose.position.x  # [m]
+            sy = currState.pose.position.y  # [m]
+            stheta = round(current_heading[2] * 180 / pi)
+
+            # gx = round(10) #(50)  # [m]
+            # gy = round(20) #(80)  # [m]
+            # gtheta = round(180)
+
+            grid_size = 1.0
+
+            bloat_list = [1, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
+            theta = [(sx-0.5, sy-0.5), (sx+0.5, sy+0.5)]
+            goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
+
+            # obs = static_obstacles(d_s)
+            # obs = obs + dynamic_obstacles(actor_list, d_s, T_s)
+            # oblen = len(obs)
+            # print(oblen)
+            rospy.sleep(0.5)
+            # path1 = find_xref(theta, goal, obs, 10, 0, bloat_list, path[1])
+            # path = [(0, 0),(5, 10), (10, 20)]
+            # print(oblen)
+            # print(path1)
+            # if path1 != None:
+            #     path = path1
+            #
+            #     # model.resetPath()
+            #
+            #     statePath = []
+            #     for coord in path:
+            #         newTargetState = ModelState()
+            #         newTargetState.pose.position.x = coord[0]
+            #         newTargetState.pose.position.y = coord[1]
+            #         newTargetState.twist.linear.x = .25
+            #         newTargetState.twist.linear.y = .25
+            #
+            #         if len(coord) == 3:
+            #             [x, y, z, w] = model.euler_to_quaternion(0, 0, coord[2]*math.pi/180)
+            #             newTargetState.pose.orientation.x = x
+            #             newTargetState.pose.orientation.y = y
+            #             newTargetState.pose.orientation.z = z
+            #             newTargetState.pose.orientation.w = w
+            #
+            #         statePath.append(newTargetState)
+
+                # model.addPlanedPath(statePath)
+                # for coord_num in range(len(path[1:])):
+                #     coord1 = path[coord_num]
+                #     coord = coord1
+                #     coord0 = path[coord_num-1]
+                #     for i in range(1,11):
+                #         newTargetState = ModelState()
+                #         newTargetState.pose.position.x = (coord1[0]-coord0[0])*i/10 + coord0[0]
+                #         newTargetState.pose.position.y = (coord1[1]-coord0[1])*i/10 + coord0[1]
+                #         newTargetState.twist.linear.x = .25
+                #         newTargetState.twist.linear.y = .25
+                #
+                #         if len(coord) == 3:
+                #             theta = np.atan2(coord1[1]- coord0[1], coord1[0]-coord0[0])
+                #             [x, y, z, w] = model.euler_to_quaternion(0, 0, theta)
+                #             newTargetState.pose.orientation.x = x
+                #             newTargetState.pose.orientation.y = y
+                #             newTargetState.pose.orientation.z = z
+                #             newTargetState.pose.orientation.w = w
+                #
+                #         statePath.append(newTargetState)
+
+                # model.addPlanedPath(statePath)
         if model.waypointList:
             targetState = model.waypointList[0]
+        #
+
+        #     print('new')
+        # print(len(model.waypointList))
+
         # if targetState == None:
         #     continue
 
         # print ("speed:", targetState.twist)
         currState =  model.getModelState()
+        # print(type(currState), type(targetState))
+        if not currState.success:
+            continue
         distToTargetX = abs(targetState.pose.position.x - currState.pose.position.x)
         distToTargetY = abs(targetState.pose.position.y - currState.pose.position.y)
+        print(distToTargetX, distToTargetY)
+        print(targetState.pose.position.x, targetState.pose.position.y)
         # print(targetState.pose.position.x,targetState.pose.position.y)
-        if(distToTargetX < 1.5 and distToTargetY < 1.5):
+        if(distToTargetX < 1 and distToTargetY < 1):
+            # print(targetState.pose.position.x,targetState.pose.position.y)
+            # print(currState.pose.position.x,currState.pose.position.y)
+
             if not model.waypointList:
                 newState = ModelState()
                 newState.model_name = 'polaris_ranger_ev'
@@ -180,11 +224,11 @@ if __name__ == "__main__":
                 #only print time the first time waypontList is empty
                 if(not endList):
                     endList = 1
-                    end = time.time()
+                    end = rospy.get_time()
                     # print("Time taken:", end-start)
             else:
                 if(endList):
-                    start = time.time()
+                    start = rospy.get_time()
                     endList = 0
                 targetState = model.waypointList.pop(0)
                 markerState = ModelState()
@@ -199,7 +243,7 @@ if __name__ == "__main__":
             markerState.pose = targetState.pose
             model.modelStatePub.publish(markerState)
 
-    rospy.spin()
+    # rospy.spin()
 
 # from math import *
 # import time
@@ -252,17 +296,17 @@ if __name__ == "__main__":
 #     theta = [(sx-0.5, sy-0.5), (sx+0.5, sy+0.5)]
 #     goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
 #
-#     # t1 = time.time()
+#     # t1 = rospy.get_time()
 #     obs = static_obstacles(d_s)
 #     # obs = obs + dynamic_obstacles(actor_list, d_s, T_s)
-#     # t2 = time.time()
+#     # t2 = rospy.get_time()
 #     # print('obstime:', t2 - t1)
 #     oblen = len(obs)
 #
-#     # t1 = time.time()
+#     # t1 = rospy.get_time()
 #     path = find_xref(theta, goal, obs, 100, 0, bloat_list)
 #     # path = [(0,0), (5, 10), (10, 20)]
-#     # t2 = time.time()
+#     # t2 = rospy.get_time()
 #     # print('synthtime:', t2- t1)
 #     print(oblen)
 #     print(path)
@@ -307,7 +351,7 @@ if __name__ == "__main__":
 #
 #     model.addPlanedPath(statePath)
 #
-#     start = time.time()
+#     start = rospy.get_time()
 #     t_s = start
 #
 #     rate = rospy.Rate(100)  # 100 Hz
@@ -320,8 +364,8 @@ if __name__ == "__main__":
 #         # targetState = model.popNextPoint()
 #         # print(targetState)
 #
-#         if time.time() - t_s >= T_synth:
-#             t_s = time.time()
+#         if rospy.get_time() - t_s >= T_synth:
+#             t_s = rospy.get_time()
 #             sx = currState.pose.position.x  # [m]
 #             sy = currState.pose.position.y  # [m]
 #             stheta = round(current_heading[2] * 180 / pi)
@@ -397,11 +441,11 @@ if __name__ == "__main__":
 #                 #only print time the first time waypontList is empty
 #                 if(not endList):
 #                     endList = 1
-#                     end = time.time()
+#                     end = rospy.get_time()
 #                     # print("Time taken:", end-start)
 #             else:
 #                 if(endList):
-#                     start = time.time()
+#                     start = rospy.get_time()
 #                     endList = 0
 #                 targetState = model.waypointList.pop(0)
 #                 markerState = ModelState()
