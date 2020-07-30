@@ -11,8 +11,10 @@ from controller import bicycleModel
 from planner import find_xref
 
 # This is the node where everything will get planned
+pt_list = []
 
 def main(T_s=2, d_s=10, actor_list=[], max_segs=100, T_synth=0.5):
+	global pt_list
 	# Create the node to publish the path
 	pub = rospy.Publisher('path', numpy_msg(Floats), queue_size=10)
 	rospy.init_node('planner', anonymous=True)

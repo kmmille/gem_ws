@@ -167,5 +167,5 @@ def talker():
 
 
 if __name__ == '__main__':
-	
+
 	talker()
