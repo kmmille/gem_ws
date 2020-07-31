@@ -119,27 +119,27 @@ if __name__ == "__main__":
             continue
         # targetState = model.popNextPoint()
 
-        if rospy.get_time() - t_s >= T_synth:
-            t_s = rospy.get_time()
-            sx = currState.pose.position.x  # [m]
-            sy = currState.pose.position.y  # [m]
-            stheta = round(current_heading[2] * 180 / pi)
+        # if rospy.get_time() - t_s >= T_synth:
+            # t_s = rospy.get_time()
+            # sx = currState.pose.position.x  # [m]
+            # sy = currState.pose.position.y  # [m]
+            # stheta = round(current_heading[2] * 180 / pi)
 
             # gx = round(10) #(50)  # [m]
             # gy = round(20) #(80)  # [m]
             # gtheta = round(180)
 
-            grid_size = 1.0
-
-            bloat_list = [1, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
-            theta = [(sx-0.5, sy-0.5), (sx+0.5, sy+0.5)]
-            goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
+            # grid_size = 1.0
+            #
+            # bloat_list = [1, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
+            # theta = [(sx-0.5, sy-0.5), (sx+0.5, sy+0.5)]
+            # goal = [(gx-0.5, gy-0.5), (gx+0.5, gy+0.5)]
 
             # obs = static_obstacles(d_s)
             # obs = obs + dynamic_obstacles(actor_list, d_s, T_s)
             # oblen = len(obs)
             # print(oblen)
-            rospy.sleep(0.5)
+            # rospy.sleep(0.5)
             # path1 = find_xref(theta, goal, obs, 10, 0, bloat_list, path[1])
             # path = [(0, 0),(5, 10), (10, 20)]
             # print(oblen)
