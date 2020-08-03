@@ -13,7 +13,7 @@ from planner import find_xref
 # This is the node where everything will get planned
 pt_list = []
 
-def main(T_s=2, d_s=10, actor_list=[], max_segs=100, T_synth=0.5):
+def main(T_s=2, d_s=15, actor_list=[], max_segs=100, T_synth=0.5):
 	global pt_list
 	# Create the node to publish the path
 	pub = rospy.Publisher('path', numpy_msg(Floats), queue_size=10)
@@ -37,8 +37,8 @@ def main(T_s=2, d_s=10, actor_list=[], max_segs=100, T_synth=0.5):
 		sy = currState.pose.position.y  # [m]
 		stheta = current_heading[2] * 180 / pi
 
-		gx = round(30) #(50)  # [m]
-		gy = round(10) #(80)  # [m]
+		gx = round(50) #(50)  # [m]
+		gy = round(80) #(80)  # [m]
 		gtheta = round(180)
 
 		grid_size = 1.0

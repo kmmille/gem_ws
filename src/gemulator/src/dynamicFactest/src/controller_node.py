@@ -11,10 +11,12 @@ from numpy.linalg import norm
 import numpy as np
 
 path = []
+updatePath = False
 def callback(data):
     global path, updatePath
     path = data.data
     path = path.reshape(len(path)/2, 2)
+    updatePath = True
     print('new thing')
 
 def listener():
@@ -31,29 +33,32 @@ def listener():
     targetState = ModelState()
 
     # Set rate to 100 Hz
-    r = rospy.Rate(70)
+    r = rospy.Rate(80)
     while not rospy.is_shutdown():
         r.sleep()
 
         statePath = []
+        # print(path)
+        path = list(path)
         print(path)
-        for coord in path[1:]:
-            newTargetState = ModelState()
-            newTargetState.pose.position.x = coord[0]
-            newTargetState.pose.position.y = coord[1]
-            newTargetState.twist.linear.x = .25
-            newTargetState.twist.linear.y = .25
+        if updatePath:
+            for coord in path[1:]:
+                newTargetState = ModelState()
+                newTargetState.pose.position.x = coord[0]
+                newTargetState.pose.position.y = coord[1]
+                newTargetState.twist.linear.x = 0
+                newTargetState.twist.linear.y = 0
 
-            if len(coord) == 3:
-                [x, y, z, w] = model.euler_to_quaternion(0, 0, coord[2]*math.pi/180)
-                newTargetState.pose.orientation.x = x
-                newTargetState.pose.orientation.y = y
-                newTargetState.pose.orientation.z = z
-                newTargetState.pose.orientation.w = w
+                if len(coord) == 3:
+                    [x, y, z, w] = model.euler_to_quaternion(0, 0, coord[2]*math.pi/180)
+                    newTargetState.pose.orientation.x = x
+                    newTargetState.pose.orientation.y = y
+                    newTargetState.pose.orientation.z = z
+                    newTargetState.pose.orientation.w = w
 
-            statePath.append(newTargetState)
+                statePath.append(newTargetState)
 
-        model.addPlanedPath(statePath)
+            model.addPlanedPath(statePath)
 
         currState = model.getModelState()
         if not currState.success:
@@ -61,12 +66,12 @@ def listener():
         if model.waypointList:
             targetState = model.waypointList[0]
 
-
+        print(targetState)
         distToTargetX = abs(targetState.pose.position.x - currState.pose.position.x)
         distToTargetY = abs(targetState.pose.position.y - currState.pose.position.y)
-        if(distToTargetX < 2 and distToTargetY < 2):
+        if(distToTargetX < 0.55 and distToTargetY < 0.55):
             if not model.waypointList:
-                # print('waypoint_list is empty')
+                print('waypoint_list is empty')
                 newState = ModelState()
                 newState.model_name = 'polaris_ranger_ev'
                 newState.pose = currState.pose
@@ -84,7 +89,10 @@ def listener():
                     start = rospy.get_time()
                     endList = 0
                 # Need new waypoint
+                print('need new waypoint')
                 targetState = model.waypointList.pop(0)
+                crd = path.pop(0)
+                print(crd)
                 markerState = ModelState()
                 markerState.model_name = 'marker'
                 markerState.pose = targetState.pose
