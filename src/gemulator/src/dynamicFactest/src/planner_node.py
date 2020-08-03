@@ -18,7 +18,7 @@ def main(T_s=2, d_s=10, actor_list=[], max_segs=100, T_synth=0.5):
 	# Create the node to publish the path
 	pub = rospy.Publisher('path', numpy_msg(Floats), queue_size=10)
 	rospy.init_node('planner', anonymous=True)
-	r = rospy.Rate(10) # 10hz
+	# r = rospy.Rate(10) # 10hz
 
 	# Initiate the model
 	model = bicycleModel()
@@ -33,9 +33,9 @@ def main(T_s=2, d_s=10, actor_list=[], max_segs=100, T_synth=0.5):
 			currState.pose.orientation.y, currState.pose.orientation.z,\
 			currState.pose.orientation.w)
 
-		sx = round(currState.pose.position.x ) # [m]
-		sy = round(currState.pose.position.y)  # [m]
-		stheta = round(current_heading[2] * 180 / pi)
+		sx = currState.pose.position.x # [m]
+		sy = currState.pose.position.y  # [m]
+		stheta = current_heading[2] * 180 / pi
 
 		gx = round(30) #(50)  # [m]
 		gy = round(10) #(80)  # [m]

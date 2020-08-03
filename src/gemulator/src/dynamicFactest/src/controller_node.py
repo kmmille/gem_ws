@@ -12,13 +12,13 @@ import numpy as np
 
 path = []
 def callback(data):
-    global path
-    print(path)
+    global path, updatePath
     path = data.data
     path = path.reshape(len(path)/2, 2)
+    print('new thing')
 
 def listener():
-    global path
+    global path, updatePath
     # Get the current path
     rospy.init_node('listener')
     rospy.Subscriber('path', numpy_msg(Floats), callback)
@@ -31,11 +31,12 @@ def listener():
     targetState = ModelState()
 
     # Set rate to 100 Hz
-    r = rospy.Rate(100)
+    r = rospy.Rate(70)
     while not rospy.is_shutdown():
         r.sleep()
 
         statePath = []
+        print(path)
         for coord in path[1:]:
             newTargetState = ModelState()
             newTargetState.pose.position.x = coord[0]
@@ -63,8 +64,9 @@ def listener():
 
         distToTargetX = abs(targetState.pose.position.x - currState.pose.position.x)
         distToTargetY = abs(targetState.pose.position.y - currState.pose.position.y)
-        if(distToTargetX < 1 and distToTargetY < 1):
+        if(distToTargetX < 2 and distToTargetY < 2):
             if not model.waypointList:
+                # print('waypoint_list is empty')
                 newState = ModelState()
                 newState.model_name = 'polaris_ranger_ev'
                 newState.pose = currState.pose
@@ -81,6 +83,7 @@ def listener():
                 if(endList):
                     start = rospy.get_time()
                     endList = 0
+                # Need new waypoint
                 targetState = model.waypointList.pop(0)
                 markerState = ModelState()
                 markerState.model_name = 'marker'

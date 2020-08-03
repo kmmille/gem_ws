@@ -114,12 +114,13 @@ class bicycleModel():
 
         # if (targetVel * math.cos(thetaError)) + (k1 * xError) <= targetVel:
         newAckermannCmd.speed = (targetVel * math.cos(thetaError)) + (k1 * xError)
+        # newAckermannCmd.speed = (targetVel)# * math.cos(thetaError)) + (k1 * xError)
         # else:
         # newAckermannCmd.speed = targetVel
         newAckermannCmd.steering_angle_velocity = (targetAngVel) + ((targetVel)*((k2*yError) + (k3*math.sin(thetaError))))
 
 
-        #print(newAckermannCmd)
+        # print(newAckermannCmd)
         return newAckermannCmd
 
     def setModelState(self, currState, targetState):
@@ -169,8 +170,7 @@ class bicycleModel():
     #add a list of points in ModelState
     def addPlanedPath(self, path):
         self.waypointList = path + self.waypointList
-    def resetPath(self):
-        del self.waypointList[:]
+
 
     def popNextPoint(self):
         if self.waypointList:
